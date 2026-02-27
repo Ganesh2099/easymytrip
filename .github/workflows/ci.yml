@@ -13,6 +13,8 @@ env:
   IMAGE_LOCAL_LATEST: easymytrip:latest
   IMAGE_DOCKERHUB: ganesh2099/easymytrip:${{ github.run_number }}
   IMAGE_DOCKERHUB_LATEST: ganesh2099/easymytrip:latest
+  IMAGE_ECR: 358262661331.dkr.ecr.ap-south-1.amazonaws.com/easymytrip:${{ github.run_number }}
+  IMAGE_ECR_LATEST: 358262661331.dkr.ecr.ap-south-1.amazonaws.com/easymytrip:latest
 
 jobs:
   build-test:
@@ -96,7 +98,6 @@ jobs:
           docker tag ${{ env.IMAGE_LOCAL }} ${{ env.IMAGE_ECR }}
           docker tag ${{ env.IMAGE_LOCAL }} ${{ env.IMAGE_ECR_LATEST }}
 
-
       - name: Scan Docker Image with Trivy
         uses: aquasecurity/trivy-action@0.20.0
         with:
@@ -127,5 +128,5 @@ jobs:
 
       - name: Push to Amazon ECR
         run: |
-          docker push ${{ env.$IMAGE_ECR }}
+          docker push ${{ env.IMAGE_ECR }}
           docker push ${{ env.IMAGE_ECR_LATEST }}
