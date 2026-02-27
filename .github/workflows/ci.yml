@@ -109,3 +109,20 @@ jobs:
         run: |
           docker push ${{ env.IMAGE_DOCKERHUB }}
           docker push ${{ env.IMAGE_DOCKERHUB_LATEST }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} \
+          | docker login --username AWS --password-stdin 358262661331.dkr.ecr.us-east-1.amazonaws.com
+
+      - name: Push to Amazon ECR
+        run: |
+          docker push $IMAGE_ECR
+          docker push $IMAGE_ECR_LATEST
