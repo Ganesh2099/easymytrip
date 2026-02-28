@@ -38,14 +38,14 @@ jobs:
           MAVEN_DIR=/opt/maven/apache-maven-$MAVEN_VERSION
           MAVEN_BIN=$MAVEN_DIR/bin/mvn
 
-          if [ -x "$MAVEN_BIN" ]; then
+                    if [ -x "$MAVEN_BIN" ]; then
             echo "✅ Maven $MAVEN_VERSION already installed"
           else
             echo "⬇️ Installing Maven $MAVEN_VERSION..."
-            sudo apt-get update
-            sudo apt-get install -y wget tar
+            sudo yum update
+            sudo yum install -y wget tar
+            sudo yum install -y wget tar
             sudo mkdir -p /opt/maven
-            cd /tmp
             wget https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz
             sudo tar -xzf apache-maven-$MAVEN_VERSION-bin.tar.gz -C /opt/maven
             sudo ln -sf $MAVEN_BIN /usr/local/bin/mvn
